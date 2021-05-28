@@ -1,48 +1,36 @@
 package main
 
 import (
-	"net/url"
+	"database/sql"
+	"fmt"
 
-	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
+	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
-type Config struct {
-	Host       string
-	Name       string
-	User       string
-	Password   string
-	DisableTLS bool
-}
-
-// Open knows how to open a database connection
-func Open(cfg Config) (*sqlx.DB, error) {
-	q := url.Values{}
-	q.Set("sslmode", "disable")
-	if cfg.DisableTLS {
-		q.Set("sslmode", "disable")
-	}
-
-	q.Set("timezone", "utc")
-
-	u := url.URL{
-		Scheme:   "postgres",
-		User:     url.UserPassword(cfg.User, cfg.Password),
-		Host:     cfg.Host,
-		Path:     cfg.Name,
-		RawQuery: q.Encode(),
-	}
-	// passing url string with scheme, user, pw etc to .Open
-	return sqlx.Open("postgres", u.String())
+// Open opens our cloud sql connection
+func Open() (*sql.DB, error) {
+	dbURI := fmt.Sprintf("host=%s user=%s password=%s port=%s database=%s", "35.245.113.254", "postgres", "hunter_db_420!", "5432", "hunterdb")
+	return sql.Open("pgx", dbURI)
 }
 
 // List reads all data from hunter table and returns it
-func List(db *sqlx.DB) ([]Metrics, error) {
+func List(db *sql.DB) ([]Metrics, error) {
 	list := []Metrics{}
 
-	const q = `SELECT playing, training, excercising, woofing, date FROM hunter`
-	if err := db.Select(&list, q); err != nil {
-		return nil, err
+	const q = `SELECT playing, training, exercising, woofing, date FROM hunter`
+
+	result, err := db.Query(q)
+	if err != nil {
+		panic(err.Error())
 	}
+	for result.Next() {
+		var metric Metrics
+		err := result.Scan(&metric.Playing, &metric.Training, &metric.Exercising, &metric.Woofing, &metric.Date)
+		if err != nil {
+			panic(err.Error())
+		}
+		list = append(list, metric)
+	}
+
 	return list, nil
 }

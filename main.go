@@ -32,9 +32,14 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 // HunterAPI is using our Metrics struct to store and serve data
 func HunterAPI(w http.ResponseWriter, r *http.Request) {
-	list := []Metrics{
-		{Playing: 50, Training: 60, Exercising: 50, Woofing: 60, Date: "05/28/2021"},
-		{Playing: 60, Training: 60, Exercising: 50, Woofing: 60, Date: "05/28/2021"},
+	db, err := Open()
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+	list, err := List(db)
+	if err != nil {
+		panic(err.Error())
 	}
 
 	data, err := json.Marshal(list)
