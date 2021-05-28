@@ -21,7 +21,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hunter Analytics is under construction")
 }
 
-// HunterAPI is using our Metrics struct to store and serve data
+// HunterAPI is serving our cloudsql data from the hunter table
 func HunterAPI(w http.ResponseWriter, r *http.Request) {
 	db, err := Open()
 	if err != nil {
