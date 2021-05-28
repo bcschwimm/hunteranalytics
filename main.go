@@ -1,4 +1,4 @@
-// HunterAnalytics API will need to collect/serve 4 data points. Time Spent Playing, Training, exercising, Woofing.
+// HunterAnalytics API will collect/serve 5 data points. Time Spent Playing, Training, Exercising, Woofing, Date.
 
 package main
 
