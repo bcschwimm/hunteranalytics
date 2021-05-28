@@ -2,14 +2,22 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
+	"io/ioutil"
 
 	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
+func pass() string {
+	text, err := ioutil.ReadFile("conn.txt")
+	if err != nil {
+		panic(err.Error())
+	}
+	return string(text)
+}
+
 // Open opens our cloud sql connection
 func Open() (*sql.DB, error) {
-	dbURI := fmt.Sprintf("host=%s user=%s password=%s port=%s database=%s", "35.245.113.254", "postgres", "hunter_db_420!", "5432", "hunterdb")
+	dbURI := pass()
 	return sql.Open("pgx", dbURI)
 }
 
