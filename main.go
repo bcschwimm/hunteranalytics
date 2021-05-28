@@ -1,4 +1,4 @@
-// HunterAnalytics API will need to collect/serve 4 data points. Time Spent Playing, Training, Excercising, Woofing.
+// HunterAnalytics API will need to collect/serve 4 data points. Time Spent Playing, Training, exercising, Woofing.
 
 package main
 
@@ -11,11 +11,11 @@ import (
 
 // Metrics are datapoints tracked in miniutes for hunters behavoir
 type Metrics struct {
-	Playing     int    `json:"playing"`
-	Training    int    `json:"training"`
-	Excercising int    `json:"excercising"`
-	Woofing     int    `json:"woofing"`
-	Date        string `json:"date"`
+	Playing    int    `json:"playing"`
+	Training   int    `json:"training"`
+	Exercising int    `json:"exercising"`
+	Woofing    int    `json:"woofing"`
+	Date       string `json:"date"`
 }
 
 func main() {
@@ -33,8 +33,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 // HunterAPI is using our Metrics struct to store and serve data
 func HunterAPI(w http.ResponseWriter, r *http.Request) {
 	list := []Metrics{
-		{Playing: 50, Training: 60, Excercising: 50, Woofing: 60, Date: "05/28/2021"},
-		{Playing: 60, Training: 60, Excercising: 50, Woofing: 60, Date: "05/28/2021"},
+		{Playing: 50, Training: 60, Exercising: 50, Woofing: 60, Date: "05/28/2021"},
+		{Playing: 60, Training: 60, Exercising: 50, Woofing: 60, Date: "05/28/2021"},
 	}
 
 	data, err := json.Marshal(list)
