@@ -37,6 +37,7 @@ func HunterAPI(w http.ResponseWriter, r *http.Request) {
 		panic(err.Error())
 	}
 	defer db.Close()
+
 	list, err := List(db)
 	if err != nil {
 		panic(err.Error())
