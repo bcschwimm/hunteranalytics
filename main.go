@@ -10,15 +10,18 @@ import (
 )
 
 func main() {
+	fmt.Println("Server Starting on Port 8080...")
+
 	http.HandleFunc("/", index)
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	http.HandleFunc("/api", HunterAPI)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-// index is our main page of HunterAnalytics
+// index serves our index.html file to the homepage
 func index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hunter Analytics is under construction")
+	http.ServeFile(w, r, "assets/index.html")
 }
 
 // HunterAPI is serving our cloudsql data from the hunter table
