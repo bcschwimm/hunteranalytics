@@ -7,6 +7,15 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
+// Metrics are datapoints tracked in miniutes for hunters behavoir
+type Metrics struct {
+	Playing    int    `json:"playing"`
+	Training   int    `json:"training"`
+	Exercising int    `json:"exercising"`
+	Woofing    int    `json:"woofing"`
+	Date       string `json:"date"`
+}
+
 func pass() string {
 	text, err := ioutil.ReadFile("conn.txt")
 	if err != nil {
