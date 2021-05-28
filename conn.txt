@@ -1,1 +1,0 @@
-host=35.245.113.254 user=postgres password=hunter_db_420! port=5432 database=hunterdb
