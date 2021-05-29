@@ -1,33 +1,28 @@
 <!DOCTYPE html>
 <html> 
     <head> 
-        <title>Hunter Analytics!</title>
+        <title>Hunter Analytics</title>
     </head> 
     <body>
-        <p>Hunter Analytics is currently under construction!</p>
-        <script 
-        type = "text/javascript" src = "index.js"></script>
-        <script> 
-        document.write("test output from js .write");
-        </script>
-
-    <h1>Submit Puppy Activity</h1>
-    <body>Please submit the date in a mm/dd/yyyy format
+        <h1>Hunter Analytics is currently under construction!</h1>
+    <p></p>
+    <p>Submit Puppy Activity</p>
+    <body>Please submit the date in a MM/DD/YYYY format
         and activity should be the number of miniutes, 
         whole numbers only
     </body>
     <p></p>
-    <form method="POST">
+    <form action="/form" method="post">
         <label>Playing:</label><br />
-        <input type="text" name="playing"><br />
+        <input type="number" name="playing" value=0><br />
         <label>Training:</label><br />
-        <input type="text" name="training"><br />
+        <input type="number" name="training" value=0><br />
         <label>Exercising:</label><br />
-        <input type="text" name="exercising"><br />
+        <input type="number" name="exercising" value=0><br />
         <label>Woofing:</label><br />
-        <input type="text" name="woofing"><br />
+        <input type="number" name="woofing" value=0><br />
         <label>Date:</label><br />
-        <input type="text" name="date"><br />
+        <input type="text" name="date" value="MM/DD/YYY"><br />
         <input type="submit">
     </form>
 
