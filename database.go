@@ -16,6 +16,28 @@ type Metrics struct {
 	Date       string `json:"date"`
 }
 
+const (
+	sqlinsert = `INSERT INTO hunter (playing, training, exercising, woofing, date)
+VALUES ($1, $2, $3, $4, $5)`
+	q = `SELECT playing, training, exercising, woofing, date FROM hunter`
+)
+
+// insert submits metric struct data into our database
+func (m Metrics) insert() error {
+	db, err := Open()
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	_, err = db.Exec(sqlinsert, m.Playing, m.Training, m.Exercising, m.Woofing, m.Date)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	return nil
+}
+
 func pass() string {
 	text, err := ioutil.ReadFile("conn.txt")
 	if err != nil {
@@ -33,8 +55,6 @@ func Open() (*sql.DB, error) {
 // List reads all data from hunter table and returns it
 func List(db *sql.DB) ([]Metrics, error) {
 	list := []Metrics{}
-
-	const q = `SELECT playing, training, exercising, woofing, date FROM hunter`
 
 	result, err := db.Query(q)
 	if err != nil {

@@ -27,7 +27,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "assets/index.html")
 }
 
-// formData is recieving a post request from html, parsing
+// formData is a handler recieving a post request from html, parsing
 // that data and redirecting the user to the home page
 func formData(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
@@ -41,12 +41,12 @@ func formData(w http.ResponseWriter, r *http.Request) {
 			Date:       r.FormValue("date"),
 		}
 		// insert into db here
-		fmt.Println(formData)
+		formData.insert()
 		http.Redirect(w, r, "/", http.StatusFound)
 	}
 }
 
-// HunterAPI is serving our cloudsql data from the hunter table
+// HunterAPI is a handler serving our cloudsql data from the hunter table
 func HunterAPI(w http.ResponseWriter, r *http.Request) {
 	db, err := Open()
 	if err != nil {
