@@ -1,30 +1,58 @@
-<!DOCTYPE html>
-<html> 
-    <head> 
-        <title>Hunter Analytics</title>
-    </head> 
-    <body>
-        <h1>Hunter Analytics is currently under construction!</h1>
-    <p></p>
-    <p>Submit Puppy Activity</p>
-    <body>Please submit the date in a MM/DD/YYYY format
-        and activity should be the number of miniutes, 
-        whole numbers only
-    </body>
-    <p></p>
-    <form action="/form" method="post">
-        <label>Playing:</label><br />
-        <input type="number" name="playing" value=0><br />
-        <label>Training:</label><br />
-        <input type="number" name="training" value=0><br />
-        <label>Exercising:</label><br />
-        <input type="number" name="exercising" value=0><br />
-        <label>Woofing:</label><br />
-        <input type="number" name="woofing" value=0><br />
-        <label>Date:</label><br />
-        <input type="text" name="date" value="MM/DD/YYY"><br />
-        <input type="submit">
-    </form>
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Hunter Analytics</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="css/main.css" />
+		<noscript><link rel="stylesheet" href="css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
 
-    </body>
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1>Hunter Analytics</h1>
+						<p>The English Springer Spaniel | <a href="https://www.instagram.com/hunter.s.huntington/">@hunter.s.huntington</a></p>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Content -->
+							<section id="content" class="main">
+								<span class="image main"><img src="images/hunter_home.jpg" alt="" /></span>
+								<h2>Submit Activity</h2>
+								<p>Please submit whole numbers only, and the date in a MM/DD/YYYY format</p>
+								<p></p>
+								    <form action="/form" method="post">
+							        <label>Playing:</label><br />
+							        <input type="number" name="playing" value=0><br />
+							        <label>Training:</label><br />
+							        <input type="number" name="training" value=0><br />
+							        <label>Exercising:</label><br />
+							        <input type="number" name="exercising" value=0><br />
+							        <label>Woofing:</label><br />
+							        <input type="number" name="woofing" value=0><br />
+							        <label>Date:</label><br />
+							        <input type="text" name="date" value="MM/DD/YYYY"><br />
+							        <input type="submit">
+							    	</form>
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; Hunter Analytics LLC. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+					</footer>
+			</div>
+	</body>
 </html>

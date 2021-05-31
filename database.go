@@ -22,6 +22,14 @@ VALUES ($1, $2, $3, $4, $5)`
 	q = `SELECT playing, training, exercising, woofing, date FROM hunter`
 )
 
+func pass() string {
+	text, err := ioutil.ReadFile("conn.txt")
+	if err != nil {
+		panic(err.Error())
+	}
+	return string(text)
+}
+
 // insert submits metric struct data into our database
 func (m Metrics) insert() error {
 	db, err := Open()
@@ -36,14 +44,6 @@ func (m Metrics) insert() error {
 	}
 
 	return nil
-}
-
-func pass() string {
-	text, err := ioutil.ReadFile("conn.txt")
-	if err != nil {
-		panic(err.Error())
-	}
-	return string(text)
 }
 
 // Open opens our cloud sql connection

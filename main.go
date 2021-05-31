@@ -14,17 +14,14 @@ import (
 func main() {
 	fmt.Println("Server Starting on Port 8080...")
 
-	http.HandleFunc("/", index)
-	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
+	// handling "/" by passing our ./assets fileserver
+	fs := http.FileServer(http.Dir("./assets"))
+	http.Handle("/", fs)
+
 	http.HandleFunc("/api", HunterAPI)
 	http.HandleFunc("/form", formData)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-// index serves our index.html file to the homepage
-func index(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "assets/index.html")
 }
 
 // formData is a handler recieving a post request from html, parsing
