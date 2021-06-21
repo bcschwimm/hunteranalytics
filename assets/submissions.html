@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Hunter Data</title>
+    </head>
+    <body>
+        <nav>
+            <a href="./index.html">Home</a>
+        </nav>
+        <hr>
+        <h1>Hunter Data</h1>
+
+        <table>
+            <tr>
+                <th>Playing</th>
+                <th>Training</th>
+                <th>Exercising</th>
+                <th>Woofing</th>
+                <th>Date</th>
+            </tr>
+        </table>
+
+        <script>
+            hunterTable = document.querySelector("table")
+            fetch("/api")
+            .then(response => response.json())
+            .then(hunterRows => {
+                hunterRows.forEach(elm => {
+                    // create table row
+                    row = document.createElement("tr")
+
+                    // create the table data elements
+                    playing = document.createElement("td")
+                    playing.innerHTML = elm.playing
+
+                    training = document.createElement("td")
+                    training.innerHTML = elm.training
+
+                    exercising = document.createElement("td")
+                    exercising.innerHTML = elm.exercising
+
+                    woofing = document.createElement("td")
+                    woofing.innerHTML = elm.woofing
+
+                    date = document.createElement("td")
+                    date.innerHTML = elm.date
+
+                    // add data elms to row
+                    row.appendChild(playing)
+                    row.appendChild(training)
+                    row.appendChild(exercising)
+                    row.appendChild(woofing)
+                    row.appendChild(date)
+
+                    hunterTable.appendChild(row)
+                })
+            })
+        </script>
+    </body>
+</html>
