@@ -23,11 +23,11 @@ hunterTable = document.querySelector("table")
                     date.innerHTML = elm.date
 
                     // add data elms to row
+                    row.appendChild(date)
                     row.appendChild(playing)
                     row.appendChild(training)
                     row.appendChild(exercising)
                     row.appendChild(woofing)
-                    row.appendChild(date)
 
                     hunterTable.appendChild(row)
                 })
