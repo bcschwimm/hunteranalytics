@@ -45,6 +45,7 @@ func (b Behavior) insert() {
 	log.Printf("Insert: Behavior: %v\n", hunterInsert)
 }
 
+// to be replaced with env var on deployment
 func mongoPass() string {
 	text, err := ioutil.ReadFile("mongo.txt")
 	if err != nil {

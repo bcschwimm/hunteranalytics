@@ -22,6 +22,7 @@ VALUES ($1, $2, $3, $4, $5)`
 	q = `SELECT playing, training, exercising, woofing, date FROM hunter`
 )
 
+// to be replaced with env var on deployment
 func pass() string {
 	text, err := ioutil.ReadFile("conn.txt")
 	if err != nil {
