@@ -88,7 +88,7 @@ func HunterAPI(w http.ResponseWriter, r *http.Request) {
 func intConv(formSubmission string) int {
 	i, err := strconv.Atoi(formSubmission)
 	if err != nil {
-		fmt.Println("error converting string from html form", err)
+		log.Printf("Error: Parsing: could not convert string from html form %v\n", err)
 	}
 	return i
 }
