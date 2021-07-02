@@ -11,7 +11,31 @@
             <a href="./behavior.html">Behavior</a>
             <a href="./submissions.html">Data</a>
         </nav>
-        
+
         <h1>Hunter Behavior Log</h1>
+        <br>
+        <!--Behavior Log Form-->
+        <section id="behavior" class="main">
+            <p>Use the below field to submit the date, crate time in miniutes using whole numbers,
+                and any notes about Hunters behavior.
+            </p>
+            <br>
+              <form action="/behaviorForm" method="post">
+                <label>Date:</label>
+                <input type="text" id="date" name="date"><br>
+
+                <label>Crate:</label>
+                <input type="number" name="crate" value=0><br>
+                <br>
+                <label>Notes</label><br>
+                <textarea name="notes" rows="10" cols="40"></textarea>
+                <br>
+                <input type="submit" class="behavior-submit">
+              </form>
+        </section>
+
+    <!--replacing empty date form id with current date-->
+    <script src="js/date.js"></script>
+
     </body>
 </html>

@@ -9,6 +9,12 @@ p, table, tr, th, td, form {
     text-align: center;
 }
 
+input[type=submit] {
+    font-size: 22px;
+    width: 10em;
+    height: 7em;
+}
+
 .hunter-data {
     margin-left: auto;
     margin-right: auto;

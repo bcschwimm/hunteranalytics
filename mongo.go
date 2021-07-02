@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"time"
 
@@ -42,5 +41,5 @@ func (b Behavior) insert() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(hunterInsert)
+	log.Printf("Insert: Behavior: %v\n", hunterInsert)
 }

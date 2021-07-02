@@ -27,24 +27,31 @@
 							<section id="content" class="main">
 								<span class="image main"><img src="images/hunter_home.jpg" alt="Hunter my Dog an English Springer Spaniel" style="width:650px;height:400px;"/></span>
 								<h2>Submit Activity</h2>
-								<p>Please submit miniutes in whole numbers only, and the date in a MM/DD/YYYY format</p>
-								<p></p>
+								<p>Please submit miniutes in whole numbers only</p>
+								<br>
 								    <form action="/form" method="post">
-							        <label>Playing:</label><br />
-							        <input type="number" name="playing" value=0><br />
-							        <label>Training:</label><br />
-							        <input type="number" name="training" value=0><br />
-							        <label>Exercising:</label><br />
-							        <input type="number" name="exercising" value=0><br />
-							        <label>Woofing:</label><br />
-							        <input type="number" name="woofing" value=0><br />
-							        <label>Date:</label><br />
-							        <input type="text" name="date" value="MM/DD/YYYY"><br />
-							        <input type="submit">
+							        <label>Playing:</label>
+							        <input type="number" name="playing" value=0><br>
+
+							        <label>Training:</label>
+							        <input type="number" name="training" value=0><br>
+
+							        <label>Exercising:</label>
+							        <input type="number" name="exercising" value=0><br>
+
+							        <label>Woofing:</label>
+							        <input type="number" name="woofing" value=0><br>
+
+							        <label>Date:</label>
+							        <input type="text" name="date" id="date"><br>
+									<br>
+							        <input type="submit" class="activity-submit">
 							    	</form>
 							</section>
 
 					</div>
+				  <!--replacing empty date form id with current date-->
+				  <script src="js/date.js"></script>
 				<br>
 				<br>
 				<!-- Footer -->
