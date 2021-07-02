@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"io/ioutil"
 	"log"
 	"time"
 
@@ -19,7 +20,7 @@ type Behavior struct {
 
 // behavior insert adds a record to our metrics collection in mongoDb
 func (b Behavior) insert() {
-	pass := "uri_string_placeholder" // mongoPass()
+	pass := mongoPass()
 	client, err := mongo.NewClient(options.Client().ApplyURI(pass))
 	if err != nil {
 		log.Fatal(err)
@@ -42,4 +43,12 @@ func (b Behavior) insert() {
 		log.Fatal(err)
 	}
 	log.Printf("Insert: Behavior: %v\n", hunterInsert)
+}
+
+func mongoPass() string {
+	text, err := ioutil.ReadFile("mongo.txt")
+	if err != nil {
+		panic(err.Error())
+	}
+	return string(text)
 }

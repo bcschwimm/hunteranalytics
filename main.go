@@ -20,6 +20,7 @@ func main() {
 
 	http.HandleFunc("/api", HunterAPI)
 	http.HandleFunc("/form", formData)
+	http.HandleFunc("/behaviorForm", behaviorData)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
@@ -39,6 +40,22 @@ func formData(w http.ResponseWriter, r *http.Request) {
 		}
 		// insert into db here
 		formData.insert()
+		http.Redirect(w, r, "/", http.StatusFound)
+	}
+}
+
+// behaviorData recieves the post request from .behavior.html
+// and inserts that data into mongo db
+func behaviorData(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	if r.Method == "POST" {
+		behaviorData := Behavior{
+			Date:  r.FormValue("date"),
+			Crate: intConv(r.FormValue("crate")),
+			Notes: r.FormValue("notes"),
+		}
+		behaviorData.insert()
 		http.Redirect(w, r, "/", http.StatusFound)
 	}
 }
