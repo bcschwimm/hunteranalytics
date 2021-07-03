@@ -3,6 +3,8 @@ package main
 import (
 	"database/sql"
 	"io/ioutil"
+	"log"
+	"strconv"
 
 	_ "github.com/jackc/pgx/v4/stdlib"
 )
@@ -71,4 +73,14 @@ func List(db *sql.DB) ([]Metrics, error) {
 	}
 
 	return list, nil
+}
+
+// intConv is a helper function to return and convert
+// form submission strings or return a 0 for errors
+func intConv(formSubmission string) int {
+	i, err := strconv.Atoi(formSubmission)
+	if err != nil {
+		log.Printf("Error: Parsing: could not convert string from html form %v\n", err)
+	}
+	return i
 }

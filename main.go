@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 )
 
 func main() {
@@ -83,12 +82,4 @@ func HunterAPI(w http.ResponseWriter, r *http.Request) {
 	if _, err := w.Write(data); err != nil {
 		log.Println("error writing content to response", err)
 	}
-}
-
-func intConv(formSubmission string) int {
-	i, err := strconv.Atoi(formSubmission)
-	if err != nil {
-		log.Printf("Error: Parsing: could not convert string from html form %v\n", err)
-	}
-	return i
 }
