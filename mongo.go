@@ -18,6 +18,13 @@ type Behavior struct {
 	Notes string `json:"notes" bson:"notes"`
 }
 
+type Trick struct {
+	ID     string `json:"id,omitempty" bson:"id"`
+	Name   string `json:"name" bson:"name"`
+	Detail string `json:"detail" bson:"detail"`
+	Level  string `json:"level" bson:"level"`
+}
+
 // behavior insert adds a record to our metrics collection in mongoDb
 func (b Behavior) insert() {
 	pass := mongoPass()
@@ -43,6 +50,60 @@ func (b Behavior) insert() {
 		log.Fatal(err)
 	}
 	log.Printf("Insert: Behavior: %v\n", hunterInsert)
+}
+
+// trickInsert adds a record to our tricks collection in the hunter mongo-db.
+// This is also used if the level of his trick has advanced
+func (t Trick) trickInsert() {
+	pass := mongoPass()
+	client, err := mongo.NewClient(options.Client().ApplyURI(pass))
+	if err != nil {
+		log.Fatal(err)
+	}
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	err = client.Connect(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer client.Disconnect(ctx)
+
+	hunterDatabase := client.Database("hunter")
+	hunterCollection := hunterDatabase.Collection("tricks")
+	hunterInsert, err := hunterCollection.InsertOne(ctx, bson.D{
+		{Key: "name", Value: t.Name},
+		{Key: "detail", Value: t.Detail},
+		{Key: "level", Value: t.Level},
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("Insert: Trick: %v\n", hunterInsert)
+}
+
+// trainingSessionInsert only adds the name of the trick we practiced into our
+// tricks collection in the hunter mongo-database
+func (t Trick) trainingSessionInsert() {
+	pass := mongoPass()
+	client, err := mongo.NewClient(options.Client().ApplyURI(pass))
+	if err != nil {
+		log.Fatal(err)
+	}
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	err = client.Connect(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer client.Disconnect(ctx)
+
+	hunterDatabase := client.Database("hunter")
+	hunterCollection := hunterDatabase.Collection("tricks")
+	hunterInsert, err := hunterCollection.InsertOne(ctx, bson.D{
+		{Key: "name", Value: t.Name},
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("Insert: Training Session: %v\n", hunterInsert)
 }
 
 // to be replaced with env var on deployment
