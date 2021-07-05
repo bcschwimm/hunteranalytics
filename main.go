@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func main() {
@@ -20,6 +21,7 @@ func main() {
 	http.HandleFunc("/api", HunterAPI)
 	http.HandleFunc("/form", formData)
 	http.HandleFunc("/behaviorForm", behaviorData)
+	http.HandleFunc("/trainingForm", commandData)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
@@ -57,6 +59,32 @@ func behaviorData(w http.ResponseWriter, r *http.Request) {
 		behaviorData.insert()
 		http.Redirect(w, r, "/", http.StatusFound)
 	}
+}
+
+// commandData is parsing our command section of the website
+// and if we have a new trick it inserts name, detail, level
+// if we have a existing trick it's only submitting the name
+func commandData(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	if r.Method == "POST" {
+		switch commandStatus := r.FormValue("command"); commandStatus {
+		case "existing":
+			existingCommand := Trick{
+				Name: r.FormValue("name"),
+			}
+			existingCommand.trainingSessionInsert()
+
+		default:
+			newCommand := Trick{
+				Name:   strings.ToLower(r.FormValue("name")),
+				Detail: r.FormValue("description"),
+				Level:  r.FormValue("level"),
+			}
+			newCommand.trickInsert()
+		}
+	}
+	http.Redirect(w, r, "/", http.StatusFound)
 }
 
 // HunterAPI is a handler serving our cloudsql data from the hunter table

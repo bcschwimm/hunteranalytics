@@ -77,7 +77,7 @@ func (t Trick) trickInsert() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("Insert: Trick: %v\n", hunterInsert)
+	log.Printf("Insert: Full Trick: %v\n", hunterInsert)
 }
 
 // trainingSessionInsert only adds the name of the trick we practiced into our
