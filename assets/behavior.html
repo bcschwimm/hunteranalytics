@@ -2,18 +2,19 @@
 
 <html>
     <head>
-        <title>Hunter Behavior</title>
+        <title>Hunter Command | Behavior</title>
         <link rel="stylesheet" href="css/main.css" />
     </head>
     <body>
         <nav>
             <a href="./index.html">Home</a>
-            <a href="./behavior.html">Behavior</a>
-            <a href="./submissions.html">Data</a>
+            <a href="./behavior.html">Command & Behavior Log</a>
+            <a href="./submissions.html">Data Summary</a>
         </nav>
         <hr>
-        <h1>Hunter Behavior Log</h1>
-        <br>
+        <h1>Hunter's Command and Behavior Log</h1>
+
+        <h2>Behavior Submission</h2>
         <!--Behavior Log Form-->
         <section id="behavior" class="main">
             <p>Use the below field to submit the date, crate time in miniutes using whole numbers,
@@ -38,18 +39,57 @@
     <script src="js/date.js"></script>
     <br>
 
-    <!--Stopwatch Below-->
-    <h2>Training Stopwatch</h2>
-    <div id="stopwatch">
-        00:00:00
-    </div>
-    <!--Button clicks are calling JS functions-->
-    <br>
-    <button onclick="startTimer()">Start</button>
-    <button onclick="stopTimer()">Stop</button>
-    <button onclick="resetTimer()">Reset</button>
+    <h2>Command Submission</h2>
+    <!--Command  Form-->
+    <section id="tricks" class="main">
+        <p>
+            Please leave level and command description blank if you are submitting an existing commaand to record a training session
+        </p>
+        <br>
+            <!--
+                Value attribute is what is sent to our server so "new" or "existing" will be sent and
+                from there we will either store Name, Level and Description, or just Name to act as a ++ for training
+            -->
+            <form action="/trainingForm" method="post">
+                <input type="radio" name="sessionType" value="new"/> New Command
+                <input type="radio" name="sessionType" value="existing" checked="checked" /> Existing Command
+                <br />
 
-    <script src="js/stopwatch.js"></script>
+                <label>Command Name:</label>
+                <input type="text" id="name" name="name"><br>
+
+                <label>Level:</label>
+                <select name="level">
+                    <option value=""></option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+                <br />
+                <br />
+
+                <label>Command Description</label><br>
+                <textarea name="desciption" rows="5" cols="40"></textarea>
+                <br />
+
+                <input type="submit" class="behavior-submit">
+
+            </form>
+    </section>
+
+        <br />
+        <!--Stopwatch Below-->
+        <h2>Training Stopwatch</h2>
+        <div id="stopwatch">
+            00:00:00
+        </div>
+        <!--Button clicks are calling JS functions-->
+        <br>
+        <button onclick="startTimer()">Start</button>
+        <button onclick="stopTimer()">Stop</button>
+        <button onclick="resetTimer()">Reset</button>
+    
+        <script src="js/stopwatch.js"></script>
 
     </body>
 </html>
