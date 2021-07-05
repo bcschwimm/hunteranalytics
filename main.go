@@ -19,7 +19,7 @@ func main() {
 	http.Handle("/", fs)
 
 	http.HandleFunc("/api", HunterAPI)
-	http.HandleFunc("/form", formData)
+	http.HandleFunc("/form", formData) // activity form
 	http.HandleFunc("/behaviorForm", behaviorData)
 	http.HandleFunc("/trainingForm", commandData)
 
