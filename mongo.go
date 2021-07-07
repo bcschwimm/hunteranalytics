@@ -106,6 +106,35 @@ func (t Trick) trainingSessionInsert() {
 	log.Printf("Insert: Training Session: %v\n", hunterInsert)
 }
 
+// readTricks takes a mongo database and collection string and returns
+// a []Trick object of all of the documents within that collection
+func readTricks(database, collection string) []Trick {
+	pass := mongoPass()
+	client, err := mongo.NewClient(options.Client().ApplyURI(pass))
+	if err != nil {
+		log.Fatal(err)
+	}
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	err = client.Connect(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer client.Disconnect(ctx)
+
+	hunterDatabase := client.Database(database)
+	hunterCollection := hunterDatabase.Collection(collection)
+
+	cursor, err := hunterCollection.Find(ctx, bson.M{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	var tricks []Trick
+	if err = cursor.All(ctx, &tricks); err != nil {
+		log.Fatal(err)
+	}
+	return tricks
+}
+
 // to be replaced with env var on deployment
 func mongoPass() string {
 	text, err := ioutil.ReadFile("mongo.txt")

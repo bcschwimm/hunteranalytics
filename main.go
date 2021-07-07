@@ -18,10 +18,11 @@ func main() {
 	fs := http.FileServer(http.Dir("./assets"))
 	http.Handle("/", fs)
 
-	http.HandleFunc("/api", HunterAPI)
-	http.HandleFunc("/form", formData) // activity form
+	http.HandleFunc("/api", HunterAPI) // capital H because we are exporting data
+	http.HandleFunc("/form", formData)
 	http.HandleFunc("/behaviorForm", behaviorData)
 	http.HandleFunc("/trainingForm", commandData)
+	http.HandleFunc("/tricksapi", TricksAPI)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
@@ -109,5 +110,22 @@ func HunterAPI(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("content-type", "applicaiton/json; charset=utf-8")
 	if _, err := w.Write(data); err != nil {
 		log.Println("error writing content to response", err)
+	}
+}
+
+// TricksAPI is serving all the documents in our tricks collection
+// from mongo to the web api "tricksapi"
+func TricksAPI(w http.ResponseWriter, r *http.Request) {
+	tricks := readTricks("hunter", "tricks")
+	trickData, err := json.Marshal(tricks)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Println("error: marshalling bson to json from mongo", err)
+		return
+	}
+	w.Header().Set("content-type", "application/json; charset=utf-8")
+	if _, err := w.Write(trickData); err != nil {
+		log.Println("error writing trick content to response", err)
 	}
 }
