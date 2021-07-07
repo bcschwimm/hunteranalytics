@@ -128,6 +128,7 @@ func readTricks(database, collection string) []Trick {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// reading all of our documents into tricks at once
 	var tricks []Trick
 	if err = cursor.All(ctx, &tricks); err != nil {
 		log.Fatal(err)
