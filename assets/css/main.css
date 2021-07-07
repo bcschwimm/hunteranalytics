@@ -33,7 +33,7 @@ input[type=submit] {
     height: 5em;
 }
 
-.hunter-data {
+.hunter-data, .trick-data {
     margin-left: auto;
     margin-right: auto;
 }

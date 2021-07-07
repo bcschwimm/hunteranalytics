@@ -1,4 +1,4 @@
-hunterTable = document.querySelector("table")
+hunterTable = document.querySelector(".hunter-data")
             fetch("/api")
             .then(response => response.json())
             .then(hunterRows => {
