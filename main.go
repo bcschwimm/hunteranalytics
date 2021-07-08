@@ -20,6 +20,7 @@ func main() {
 	http.HandleFunc("/behaviorForm", behaviorData)
 	http.HandleFunc("/trainingForm", commandData)
 	http.HandleFunc("/tricksapi", TricksAPI)
+	http.HandleFunc("/behaviorapi", BehaviorAPI)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
@@ -118,11 +119,28 @@ func TricksAPI(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		log.Println("error: marshalling bson to json from mongo", err)
+		log.Println("error: marshalling tricks bson to json: ", err)
 		return
 	}
 	w.Header().Set("content-type", "application/json; charset=utf-8")
 	if _, err := w.Write(trickData); err != nil {
 		log.Println("error writing trick content to response", err)
+	}
+}
+
+// BehaviorAPI is serving all the documents in our metrics collection
+// from mongo to the web api "behaviorapi"
+func BehaviorAPI(w http.ResponseWriter, r *http.Request) {
+	behaviors := readBehavior("hunter", "metrics")
+	behaviorData, err := json.Marshal(behaviors)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Println("error: marhalling metric collection bson to json: ", err)
+		return
+	}
+	w.Header().Set("content-type", "application/json; charset=utf-8")
+	if _, err := w.Write(behaviorData); err != nil {
+		log.Println("error writing behavior content to response", err)
 	}
 }

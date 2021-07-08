@@ -32,7 +32,8 @@ func (b Behavior) insert() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
@@ -60,7 +61,8 @@ func (t Trick) trickInsert() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
@@ -88,7 +90,8 @@ func (t Trick) trainingSessionInsert() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
@@ -114,7 +117,8 @@ func readTricks(database, collection string) []Trick {
 	if err != nil {
 		log.Fatal(err)
 	}
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
@@ -133,7 +137,40 @@ func readTricks(database, collection string) []Trick {
 	if err = cursor.All(ctx, &tricks); err != nil {
 		log.Fatal(err)
 	}
+
 	return tricks
+}
+
+// readBehavior takes a mongo database and collection string and returns
+// a []Behavior object of all of the documents within that collection
+func readBehavior(database, collection string) []Behavior {
+	pass := mongoPass()
+	client, err := mongo.NewClient(options.Client().ApplyURI(pass))
+	if err != nil {
+		log.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	err = client.Connect(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer client.Disconnect(ctx)
+
+	hunterDatabase := client.Database(database)
+	hunterCollection := hunterDatabase.Collection(collection)
+
+	cursor, err := hunterCollection.Find(ctx, bson.M{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	// reading all of our documents into tricks at once
+	var behaviors []Behavior
+	if err = cursor.All(ctx, &behaviors); err != nil {
+		log.Fatal(err)
+	}
+
+	return behaviors
 }
 
 // to be replaced with env var on deployment
