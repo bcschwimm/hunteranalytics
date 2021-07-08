@@ -1,6 +1,3 @@
-// HunterAnalytics API will collect/serve 5 data points. Time Spent Playing, Training, Exercising, Woofing, Date.
-// use regex must compile to validate form
-
 package main
 
 import (
@@ -50,7 +47,7 @@ func formData(w http.ResponseWriter, r *http.Request) {
 // and inserts that data into mongo db
 func behaviorData(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	// TODO: lets not insert Notes if its "", check for blank return here
+
 	if r.Method == "POST" {
 		behaviorData := Behavior{
 			Date:  r.FormValue("date"),
